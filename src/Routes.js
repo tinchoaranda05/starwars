@@ -4,14 +4,16 @@ import App from './App'
 import CharacterData from './CharacterData'
 import StarshipData from './StarshipData'
 import Characters from './Characters'
+import Home from './Home'
 
 const routes = (
     <App>
-        <Route path='/:name' component={CharacterData} />
+        <Route exact path='/:search' component={Home} />
+        <Route path='/:search/:name' component={CharacterData} />
         <Route render={() => {
             return (
                 <Characters>
-                    <Route path='/:name/:id' component={StarshipData} />
+                    <Route path='/:search/:name/:id' component={StarshipData} />
                 </Characters>
             )
         }} />

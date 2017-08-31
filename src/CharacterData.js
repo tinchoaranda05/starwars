@@ -5,10 +5,9 @@ export default class People extends React.Component {
     constructor(){
         super();
         this.state= {
-            People: [],
-            show: false
+            People: []
         }
-        this.showContent= this.showContent.bind(this)
+
     }
 
     componentDidMount(){
@@ -19,10 +18,8 @@ export default class People extends React.Component {
         })
         .then((data) =>{
             this.setState({
-                show: true,
                 People: data.results
             })
-            console.log( this.state.People);
         })
         .catch((err) => {
             console.log(err);
@@ -30,24 +27,19 @@ export default class People extends React.Component {
         
     }
 
-    showContent(){
-        this.setState({
-            show: false
-        })
-    }
 
     render(){
         return(
             <div>
-                {this.state.show ?
+                {this.props.match.isExact ?
                 <div className='container'>
                     <button className='btn btn-warning button' onClick={this.props.history.goBack}>back</button>
-                    <h3 className='text-center'>CHARACTERS:</h3>
+                    <h2 className='text-center'>{this.props.match.params.name}</h2>
                     {this.state.People.map((data, number) =>{
                         return(
                             <div key={number} className='col-md-3'>
                                 <div className='bg-color'>
-                                <h3>{data.name}</h3>
+                                <img className='img-thumbnail image' src={'../images/'+ data.name +'.jpg'} alt='character face' />
                                 <p>Age: {data.birth_year}</p>
                                 <p>Gender: {data.gender}</p>
                                 <p>Eye color: {data.eye_color}</p>
@@ -56,7 +48,7 @@ export default class People extends React.Component {
                                 {data.starships.map ((info, n) =>{
                                     return(
                                         <div key={n}>
-                                            <Link to={`${this.props.match.url}/${info.split("/")[5]}`}><p onClick={this.showContent}>Starship {info.split("/")[5]}</p></Link>   
+                                            <Link to={`${this.props.match.url}/${info.split("/")[5]}`}><p>Starship {info.split("/")[5]}</p></Link>   
                                         </div>
                                     )
                                 })}

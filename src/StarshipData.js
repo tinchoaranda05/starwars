@@ -10,7 +10,6 @@ export default class Info extends React.Component {
     }
 
     componentDidMount(){
-        console.log(this.props)
         fetch('https://swapi.co/api/starships/' + this.props.match.params.id)
         .then((data) => {
             return data.json();
